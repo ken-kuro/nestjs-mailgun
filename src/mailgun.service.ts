@@ -24,6 +24,12 @@ import {
 } from 'mailgun.js/interfaces/mailListMembers';
 import type APIError from 'mailgun.js/error';
 import { MAILGUN_CONFIGURATION } from './constants';
+import {
+  DomainTemplateData, DomainTemplatesQuery, ListDomainTemplatesResult,
+  TemplateQuery,
+  UpdateOrDeleteDomainTemplateResult
+} from 'mailgun.js/interfaces/DomainTemplates';
+import {DomainTemplateItem} from "mailgun.js/domainsTemplates";
 
 export type MailgunError = APIError;
 
@@ -78,7 +84,7 @@ export class MailgunService {
   ): Promise<NewMultipleMembersResponse> =>
     this.mailgun.lists.members.createMembers(mailListAddress, data);
 
-  public listupdateMember = async (
+  public listUpdateMember = async (
     address: string,
     memberAddress: string,
     data: CreateUpdateMailListMembers,
@@ -90,4 +96,36 @@ export class MailgunService {
     memberAddress: string,
   ): Promise<DeletedMember> =>
     this.mailgun.lists.members.destroyMember(address, memberAddress);
+
+  public createTemplate = async (
+      domain: string,
+      data: DomainTemplateData,
+  ): Promise<DomainTemplateItem> =>
+      this.mailgun.domains.domainTemplates.create(domain, data);
+
+  public getTemplate = async (
+      domain: string,
+      templateName: string,
+      query?: TemplateQuery,
+  ): Promise<DomainTemplateItem> =>
+      this.mailgun.domains.domainTemplates.get(domain, templateName, query);
+
+  public updateTemplate = async (
+      domain: string,
+      templateName: string,
+      data: DomainTemplateData,
+  ): Promise<UpdateOrDeleteDomainTemplateResult> =>
+      this.mailgun.domains.domainTemplates.update(domain, templateName, data);
+
+  public deleteTemplate = async (
+      domain: string,
+      templateName: string,
+  ): Promise<UpdateOrDeleteDomainTemplateResult> =>
+      this.mailgun.domains.domainTemplates.destroy(domain, templateName);
+
+  public listTemplate = async (
+      domain: string,
+      query: DomainTemplatesQuery,
+  ): Promise<ListDomainTemplatesResult> =>
+      this.mailgun.domains.domainTemplates.list(domain, query);
 }
