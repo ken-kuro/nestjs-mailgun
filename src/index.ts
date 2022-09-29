@@ -10,6 +10,5 @@ export {
     TemplateQuery,
     UpdateOrDeleteDomainTemplateResult
 } from 'mailgun.js/interfaces/DomainTemplates';
-export {DomainTemplateItem} from "mailgun.js/domainsTemplates";
 export {default as APIResponse} from 'mailgun.js/interfaces/ApiResponse';
 export {default as APIErrorOptions} from 'mailgun.js/interfaces/APIErrorOptions';
