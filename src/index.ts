@@ -10,9 +10,20 @@ export {
     TemplateQuery,
     UpdateOrDeleteDomainTemplateResult
 } from 'mailgun.js/interfaces/DomainTemplates';
+
 enum YesNo {
     YES = 'yes',
     NO = 'no',
 }
+
+export {
+    CreateUpdateMailListMembers,
+    DeletedMember,
+    MailListMember,
+    MailListMembersQuery,
+    MailListMembersResult,
+    MultipleMembersData,
+    NewMultipleMembersResponse,
+} from 'mailgun.js/interfaces/mailListMembers';
 export {default as APIResponse} from 'mailgun.js/interfaces/ApiResponse';
 export {default as APIErrorOptions} from 'mailgun.js/interfaces/APIErrorOptions';
