@@ -10,12 +10,10 @@ export {
     TemplateQuery,
     UpdateOrDeleteDomainTemplateResult
 } from 'mailgun.js/interfaces/DomainTemplates';
-
-enum YesNo {
+export enum YesNo {
     YES = 'yes',
     NO = 'no',
 }
-
 export {
     CreateUpdateMailListMembers,
     DeletedMember,
