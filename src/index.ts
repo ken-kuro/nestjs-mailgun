@@ -8,7 +8,7 @@ export {
 export {
     DomainTemplateData, DomainTemplatesQuery, ListDomainTemplatesResult,
     TemplateQuery,
-    UpdateOrDeleteDomainTemplateResult
+    UpdateOrDeleteDomainTemplateResult, YesNo
 } from 'mailgun.js/interfaces/DomainTemplates';
 export {default as APIResponse} from 'mailgun.js/interfaces/ApiResponse';
 export {default as APIErrorOptions} from 'mailgun.js/interfaces/APIErrorOptions';
