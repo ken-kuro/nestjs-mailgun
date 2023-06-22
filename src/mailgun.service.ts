@@ -1,19 +1,13 @@
 import FormData from 'form-data';
 import { Injectable, Inject } from '@nestjs/common';
-import Mailgun from 'mailgun.js';
-import Client from 'mailgun.js/client';
-import Options from 'mailgun.js/interfaces/Options';
-import type { ValidationResult } from 'mailgun.js/interfaces/Validate';
-import {
+import Mailgun, {
+  Interfaces,
+  MailgunClientOptions,
   CreateUpdateList,
   DestroyedList,
   MailingList,
-} from 'mailgun.js/interfaces/lists';
-import {
   MailgunMessageData,
   MessagesSendResult,
-} from 'mailgun.js/interfaces/Messages';
-import {
   CreateUpdateMailListMembers,
   DeletedMember,
   MailListMember,
@@ -21,24 +15,25 @@ import {
   MailListMembersResult,
   MultipleMembersData,
   NewMultipleMembersResponse,
-} from 'mailgun.js/interfaces/mailListMembers';
-import type APIError from 'mailgun.js/error';
-import { MAILGUN_CONFIGURATION } from './constants';
-import {
-  DomainTemplateData, DomainTemplatesQuery, ListDomainTemplatesResult,
+  ValidationResult,
+  APIErrorType,
+  DomainTemplateData,
+  DomainTemplatesQuery,
+  ListDomainTemplatesResult,
   TemplateQuery,
-  UpdateOrDeleteDomainTemplateResult
-} from 'mailgun.js/interfaces/DomainTemplates';
-import {DomainTemplateItem} from "mailgun.js/domainsTemplates";
+  UpdateOrDeleteDomainTemplateResult,
+} from 'mailgun.js';
+import { MAILGUN_CONFIGURATION } from './constants';
 
-export type MailgunError = APIError;
+export type MailgunError = APIErrorType;
 
 @Injectable()
 export class MailgunService {
-  private readonly mailgun: Client;
+  private readonly mailgun: Interfaces.IMailgunClient;
 
   constructor(
-    @Inject(MAILGUN_CONFIGURATION) private readonly configuration: Options,
+    @Inject(MAILGUN_CONFIGURATION)
+    private readonly configuration: MailgunClientOptions,
   ) {
     this.mailgun = new Mailgun(FormData).client(configuration);
   }
@@ -98,34 +93,34 @@ export class MailgunService {
     this.mailgun.lists.members.destroyMember(address, memberAddress);
 
   public createTemplate = async (
-      domain: string,
-      data: DomainTemplateData,
-  ): Promise<DomainTemplateItem> =>
-      this.mailgun.domains.domainTemplates.create(domain, data);
+    domain: string,
+    data: DomainTemplateData,
+  ): Promise<Interfaces.IDomainTemplate> =>
+    this.mailgun.domains.domainTemplates.create(domain, data);
 
   public getTemplate = async (
-      domain: string,
-      templateName: string,
-      query?: TemplateQuery,
-  ): Promise<DomainTemplateItem> =>
-      this.mailgun.domains.domainTemplates.get(domain, templateName, query);
+    domain: string,
+    templateName: string,
+    query?: TemplateQuery,
+  ): Promise<Interfaces.IDomainTemplate> =>
+    this.mailgun.domains.domainTemplates.get(domain, templateName, query);
 
   public updateTemplate = async (
-      domain: string,
-      templateName: string,
-      data: DomainTemplateData,
+    domain: string,
+    templateName: string,
+    data: DomainTemplateData,
   ): Promise<UpdateOrDeleteDomainTemplateResult> =>
-      this.mailgun.domains.domainTemplates.update(domain, templateName, data);
+    this.mailgun.domains.domainTemplates.update(domain, templateName, data);
 
   public deleteTemplate = async (
-      domain: string,
-      templateName: string,
+    domain: string,
+    templateName: string,
   ): Promise<UpdateOrDeleteDomainTemplateResult> =>
-      this.mailgun.domains.domainTemplates.destroy(domain, templateName);
+    this.mailgun.domains.domainTemplates.destroy(domain, templateName);
 
   public listTemplate = async (
-      domain: string,
-      query: DomainTemplatesQuery,
+    domain: string,
+    query: DomainTemplatesQuery,
   ): Promise<ListDomainTemplatesResult> =>
-      this.mailgun.domains.domainTemplates.list(domain, query);
+    this.mailgun.domains.domainTemplates.list(domain, query);
 }
