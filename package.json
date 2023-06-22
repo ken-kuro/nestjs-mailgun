@@ -1,6 +1,6 @@
 {
   "name": "@ken-kuro/nestjs-mailgun",
-  "version": "4.0",
+  "version": "4.0.0",
   "description": "NestJS provider for sending emails with mailgun",
   "author": "Minh Hieu <hieuhm261@gmail.com>",
   "license": "MIT",
